@@ -1,0 +1,278 @@
+[
+	{
+		"osm_id": "1403916",
+		"name": "France",
+		"kml": false,
+		"website": "https://www.faune-france.org"
+	},
+	{
+		"osm_id": "51701",
+		"name": "Switzerland",
+		"kml": true,
+		"website": "https://www.ornitho.ch"
+	},
+	{
+		"osm_id": "365331",
+		"name": "Italy",
+		"kml": false,
+		"website": "http://www.ornitho.it"
+	},
+	{
+		"osm_id": "16239",
+		"name": "Austria",
+		"kml": false,
+		"website": "http://www.ornitho.at"
+	},
+	{
+		"osm_id": "51477",
+		"name": "Germany",
+		"kml": false,
+		"website": "http://www.ornitho.de"
+	},
+	{
+		"osm_id": "349053",
+		"name": "Catalonia",
+		"kml": true,
+		"website": "http://www.ornitho.cat"
+	},
+	{
+		"osm_id": "2171347",
+		"name": "Luxembourg",
+		"kml": false,
+		"website": "http://ornitho.lu"
+	},
+	{
+		"osm_id": "49715",
+		"name": "Poland",
+		"kml": false,
+		"website": "http://ornitho.pl"
+	},
+	{
+		"osm_id": "349042",
+		"name": "Basque Country",
+		"kml": true,
+		"website": "http://www.ornitho.eus/"
+	},
+	{
+		"osm_id": "8641",
+		"name": "Champagne-Ardenne",
+		"kml": false,
+		"website": "http://www.faune-Champagne-ardenne.org"
+	},
+	{
+		"osm_id": "8636",
+		"name": "Alsace",
+		"kml": false,
+		"website": "http://www.faune-alsace.org"
+	},
+	{
+		"osm_id": "8645",
+		"name": "Lorraine",
+		"kml": false,
+		"website": "http://www.faune-lorraine.org"
+	},
+	{
+		"osm_id": "7428",
+		"name": "Charente",
+		"kml": false,
+		"website": "http://www.faune-Charente.org"
+	},
+	{
+		"osm_id": "7431",
+		"name": "Charente-Maritime",
+		"kml": false,
+		"website": "http://www.faune-Charente-maritime.org"
+	},
+	{
+		"osm_id": "8644",
+		"name": "Limousin",
+		"kml": false,
+		"website": "http://www.faune-limousin.eu"
+	},
+	{
+		"osm_id": "7455",
+		"name": "Deux-Sèvres",
+		"kml": false,
+		"website": "http://www.nature79.org"
+	},
+	{
+		"osm_id": "8637",
+		"name": "Aquitaine",
+		"kml": false,
+		"website": "http://www.faune-aquitaine.org"
+	},
+	{
+		"osm_id": "7377",
+		"name": "Vienne",
+		"kml": false,
+		"website": "http://vienne.lpo.fr"
+	},
+	{
+		"osm_id": "7387",
+		"name": "Ain",
+		"kml": false,
+		"website": "http://www.faune-ain.org"
+	},
+	{
+		"osm_id": "8638",
+		"name": "Auvergne",
+		"kml": false,
+		"website": "http://www.faune-auvergne.org"
+	},
+	{
+		"osm_id": "7430",
+		"name": "Ardèche",
+		"kml": false,
+		"website": "http://www.faune-ardeche.org"
+	},
+	{
+		"osm_id": "7434",
+		"name": "Drôme",
+		"kml": false,
+		"website": "http://www.faune-drome.org"
+	},
+	{
+		"osm_id": "7407",
+		"name": "Haute-Savoie",
+		"kml": false,
+		"website": "http://haute-savoie.lpo.fr"
+	},
+	{
+		"osm_id": "7437",
+		"name": "Isère",
+		"kml": false,
+		"website": "http://www.faune-isere.org"
+	},
+	{
+		"osm_id": "7420",
+		"name": "Loire",
+		"kml": false,
+		"website": "http://www.faune-loire.org"
+	},
+	{
+		"osm_id": "4850451",
+		"name": "Rhône",
+		"kml": false,
+		"website": "http://www.faune-rhone.org"
+	},
+	{
+		"osm_id": "7425",
+		"name": "Savoie",
+		"kml": false,
+		"website": "http://www.faune-savoie.org"
+	},
+	{
+		"osm_id": "102740",
+		"name": "Brittany",
+		"kml": false,
+		"website": "http://www.faune-bretagne.org"
+	},
+	{
+		"osm_id": "7424",
+		"name": "Côte-d'Or",
+		"kml": false,
+		"website": "http://www.oiseaux-cote-dor.org"
+	},
+	{
+		"osm_id": "8642",
+		"name": "Free County",
+		"kml": false,
+		"website": "http://franche-comte.lpo.fr"
+	},
+	{
+		"osm_id": "7448",
+		"name": "Nièvre",
+		"kml": false,
+		"website": "http://www.faune-nievre.org"
+	},
+	{
+		"osm_id": "7392",
+		"name": "Yonne",
+		"kml": false,
+		"website": "http://www.faune-yonne.org"
+	},
+	{
+		"osm_id": "7456",
+		"name": "Cher",
+		"kml": false,
+		"website": "http://www.faune-Cher.org"
+	},
+	{
+		"osm_id": "7408",
+		"name": "Indre-et-Loire",
+		"kml": false,
+		"website": "http://www.faune-touraine.org"
+	},
+	{
+		"osm_id": "8643",
+		"name": "Languedoc-Roussillon",
+		"kml": false,
+		"website": "http://www.faune-lr.org"
+	},
+	{
+		"osm_id": "7451",
+		"name": "Aveyron",
+		"kml": false,
+		"website": "http://www.faune-tarn-aveyron.org"
+	},
+	{
+		"osm_id": "8649",
+		"name": "Ile-de-France",
+		"kml": false,
+		"website": "http://www.faune-iledefrance.org"
+	},
+	{
+		"osm_id": "7432",
+		"name": "Loire-Atlantique",
+		"kml": false,
+		"website": "http://www.faune-loire-atlantique.org"
+	},
+	{
+		"osm_id": "7409",
+		"name": "Maine-et-Loire",
+		"kml": false,
+		"website": "http://www.faune-anjou.org"
+	},
+	{
+		"osm_id": "7438",
+		"name": "Mayenne",
+		"kml": false,
+		"website": "http://www.faune-maine.org"
+	},
+	{
+		"osm_id": "7443",
+		"name": "Sarthe",
+		"kml": false,
+		"website": "http://www.faune-maine.org"
+	},
+	{
+		"osm_id": "7402",
+		"name": "Vendée",
+		"kml": false,
+		"website": "http://www.faune-vendee.org"
+	},
+	{
+		"osm_id": "8654",
+		"name": "Provence-Alpes-Côte d'Azur",
+		"kml": false,
+		"website": "http://www.faune-paca.org"
+	},
+	{
+		"osm_id": "1260552",
+		"name": "Martinique",
+		"kml": false,
+		"website": "http://www.faune-martinique.org"
+	},
+	{
+		"osm_id": "77601",
+		"name": "Réunion",
+		"kml": false,
+		"website": "http://www.faune-reunion.fr"
+	},
+	{
+		"osm_id": "2202121",
+		"name": "French Guiana",
+		"kml": false,
+		"website": "http://www.faune-guyane.fr"
+	}
+]
