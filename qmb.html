@@ -1,413 +1,167 @@
-<div class="MysliderModal"></div>
-<div id="sidebar" class="sidebar">
-	<!-- Nav tabs -->
-	<div class="sidebar-tabs">
-		<ul role="tablist">
-			<li id="li-home"><a href="#home" role="tab" title="Home"><i class="fa fa-bars"></i></a></li>
-			<li id="li-lists" class="active"><a href="#lists" role="tab" title="List"><i class="fa fa-list"></i></a></li>
-			<li id="li-searchs"><a href="#searchs" role="tab" title="Search"><i class="fa fa-search"></i></a></li>
-			<li id="li-example"><a href="#example" role="tab" title="Example"><i class="fa fa-lightbulb-o"></i></a></li>
-			<li id="li-share"><a href="#share" role="tab" title="Share"><i class="fa fa-share"></i></a></li>
-			<li id="li-record" style="display:none;"><a href="#record" role="tab" title="Record"><i class="fa fa-binoculars"></i></a></li>
-		</ul>
+---
+layout: blank
+permalink: /querymapbiolovision/
+title: "Query Map Biolovision"
+plugins: 
+- QueryMapBiolovision
+- token
+- jQuery
+- Bootstrap
+- Leaflet
+- Leaflet.draw
+- leaflet-providers
+- selectize.js
+- bootstrap-datetimepicker
+- moment.js
+- font-awesome
+- leaflet-pip
+- leaflet-easybutton
+- no_default_script
+- popper.js
+---
 
-		<ul role="tablist">
-			<li><a href="#instruction" title="Instruction" role="tab"><i class="fa fa-question"></i></a></li>
-		</ul>
+<div class="d-flex">
+	<div id="sidebar" class=" collapse show width">
+		<div class="row">
+			<h1 class="title" >Search</h1>
+		</div>
+		<form id="yourForm" onsubmit="window.open(getLink()); return false;">
+			<div class="row">
+				<div class="col-md-12" >
+					<h4 class="subtitle">Place</h4> 
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class="col-md-9" style="padding-right:3px;"><select id="countrySelect" class="form-control" type="text" placeholder="Choose a websites"></select></div>
+				<div class="col-md-3 text-center" style="padding-left:3px;"><button type="button" class="btn btn-primary btn-primary btn-md" id="search-on-map">Select</button></div>
+				<div class="col-md-12">
+					<nav class="nav nav-pills nav-fill" id="place">
+						<a class="nav-item nav-link active" name="all" title="All places from the selected region" href="#">All</a>
+						<a class="nav-item nav-link" href="#" name="coord" title="Using rectangle">Coordinate
+							<button class="easy-button-button" id="draw-rectangle" title="Draw the rectangle on the map" type="button">
+								<i class="fas fa-square-full fa-sm"></i>
+							</button>
+						</a>
+					</nav>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12" >
+					<h4 class="subtitle">Date</h4> 
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class="col-lg-8 radio">
+					<label><input type="radio" name="radio_date" value="range">
+						<div class="input-group input-daterange">
+							<input class="form-control" type="text" value="" id="input-date-from">
+							<span class="input-group-addon">to</span>
+							<input class="form-control" type="text" value="" id="input-date-to">
+						</div>
+					</label>
+				</div> 
+				<div class="col-lg-4 radio">
+					<label><input type="radio" name="radio_date" value="offset"> <input class="form-control" id="date_ago" type="number" value="5" min="0" style="margin-right: 3px;">days</label>
+				</div>
+				<div class="col-lg-12 radio date-cust">
+					<a href="#" id="date-range-10years">[last 10 years]</a> <a href="#" id="date-range-1year">[last year]</a> <a href="#" id="date-range-thisyear">[this year]</a> <a href="#" id="date-range-thismonth">[this month]</a> <a href="#" id="date-range-thisweek">[this week]</a>
+				</div>
+				<div class="col-lg-8 radio">
+					<label><input type="radio" name="radio_date" value="season">
+						<div class="input-group input-daterange">
+							<input class="form-control" type="text" value="" id="input-season-from"> 
+							<span class="input-group-addon">to</span>
+							<input class="form-control" type="text" value="" id="input-season-to">
+						</div>
+					</label>
+				</div>
+				<div class="col-lg-4 radio">
+					<label><input type="radio" name="radio_date" value="all">All time</label>
+				</div>
+				<div class="col-lg-12 radio date-cust">
+					<a href="#" id="date-season-spring">[Spring]</a> <a href="#" id="date-season-summer">[Summer]</a> <a href="#" id="date-season-autumn">[Autumn]</a> <a href="#" id="date-season-winter">[Winter]</a> <a href="#" id="date-season-plusmoins3">[+/-3d]</a> <a href="#" id="date-season-plusmoins7">[+/-7d]</a> <a href="#" id="date-season-plusmoins14">[+/-14d]</a>
+				</div> 
+			</div> 
+			<div class="row">
+				<div class="col-md-12" >
+					<h4 class="subtitle">Species</h4> 
+				</div>
+			</div> 
+			<div class="row form-group">
+				<div class="col-lg-12 radio">
+					<label>
+						<input type="radio" name="radio_specie" value="category" checked="checked">
+						<div id="cat" class="list-group list-group-horizontal btn-group-justified btn-xs" style="display: inline-flex; padding-left: 4px;">
+							<a class="list-group-item active" name="never" title="Never recorded">+++</a>
+							<a class="list-group-item active" name="veryrare" title="Very Rare">++</a>
+							<a class="list-group-item active" name="rare" title="Rare">+</a>
+							<a class="list-group-item active" name="unusual" title="Unusual">-</a>
+							<a class="list-group-item" name="common" title="Common">--</a>
+							<a class="list-group-item" name="verycommon" title="Very Common">---</a>
+							<a class="list-group-item" name="escaped" title="Escaped">E</a>
+						</div>
+						<div id="search_species_lang" class="btn-xs list-group list-group-horizontal text-right btn-xs">
+							<a class="list-group-item active" name="en" title="English">EN</a>
+							<a class="list-group-item active" name="fr" title="French">FR</a>
+						</div>
+					</label>
+				</div>
+				<div class="col-md-10 radio">
+					<label><input type="radio" name="radio_specie" value="species"><select id="search_species" class="form-control" type="text" placeholder="Search a specie..."></select></label>
+				</div>
+				<div class="col-md-2 radio" style="padding-right:20px;">
+					<button type="button" class="btn btn-md btn-primary" id="button-sp-info" title="See bird statistic and information">Info</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6" >
+					<h4 class="subtitle">Other</h4> 
+				</div>
+				<div class="col-md-6" >
+					<h4 class="subtitle">Outputs</h4> 
+				</div>
+			</div> 
+			<div class="row form-group">
+				<div class="col-md-6"  id="checkbox-list">
+					<div class="checkbox"><label><input id="only_mine" type="checkbox">Mine</label></div>
+					<div class="checkbox"><label title="Only select new data since last session"><input id="only_new" type="checkbox">New</label></div>
+
+					<div class="checkbox"><label title="Only select data with picture"><input id="only_picture" type="checkbox">Picture</label></div>
+					<div class="checkbox"><label title="Only select data with sound"><input id="only_sound" type="checkbox">Sound</label></div>
+				</div>
+				<div class="col-md-6">
+					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+						Result Format
+						<div class="dropdown-menu" id="website-dropdown-toggle" aria-labelledby="dropdownMenuButton" title="View the result on the corresponding biolovision website. Select the visualization of the website here.">
+							<a class="dropdown-item" name="list" href="#">Detail List</a>
+							<a class="dropdown-item" name="species" href="#">Species List</a>
+							<a class="dropdown-item" name="synth" href="#">Daily Summary</a>
+							<a class="dropdown-item" name="histo" href="#">Temporal Graph</a>
+							<a class="dropdown-item" name="alt" href="#">Altitude Graph</a>
+							<a class="dropdown-item" name="map" href="#">Static Map</a>
+						</div>
+						<div class="dropdown">
+
+						</div>
+					</div>
+				</div>
+			<div class="row" id="buttons">
+				<div class="col-md-12 center-block">
+					<input title="Let's Go!" type="submit" id="send" class="btn btn-primary btn-lg center-block">
+				</div>
+			</div>
+		</form>
+
+		<label>Convert Specie List (HTML) to CSV
+			<input type="file" id="uploadSpecieList" class="form-control" accept=".html">
+			<span class="custom-file-control"></span>
+		</label>
+		<label>Convert eBird Target (HTML) to CSV
+			<input type="file" id="uploadeBirdTarget" class="form-control" accept=".html">
+			<span class="custom-file-control"></span>
+		</label>
 	</div>
-
-	<!-- Tab panes -->
-	<div class="sidebar-content">
-		<div class="sidebar-pane" id="home">
-			<div class="sidebar-header">
-				<h1>Improved Biolovision Visualisation</h1>
-				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-			</div>
-			<div class="sidebar-body">
-				<h4>What is iBV?</h4>
-				<p>iBV stands for “Improved Biolovision Visualisation”. It’s a web-app designed to visualize the data from all biolovision websites.</p>
-				<h4>What can I do with iBV?</h4>
-				<ul>
-					<li>Query the database on a specific area by drawing a rectangle on the amp</li>
-					<li>View the query on a zoomable map (only available with certain websites: ornitho.ch, ornitho.cat…) </li>
-					<li>Create a spreadsheet with the species list from the query</li>
-				</ul>
-				<h4>Where to start?</h4>
-				<p>Check out the instructions <i class="fa fa-question"></i> to learn how to use the website. If you’re a pro, start directly on the search menu <i class="fa fa-search"></i></p>
-				<div style="position: absolute; bottom: 5px;right:5px;">
-					<span class="navbar-brand" id="navbar-poweredby">Powered by</span>
-					<a href="https://zoziologie.raphaelnussbaumer.com" target="_blank"><img class="normal_logo" src="https://i0.wp.com/zoziologie.raphaelnussbaumer.com/wp-content/uploads/2015/03/bird11-e1426641932300.png?w=1170&amp;ssl=1" alt="Zoziologie" data-recalc-dims="1"></a>
-				</div>
-			</div>
-		</div>
-		<div class="sidebar-pane active" id="lists">
-			<div class="sidebar-header">
-				<h1>List</h1>
-				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-			</div>
-			<div class="sidebar-body">
-				<div class="row">
-					<div class="col-lg-12">
-						<input class="form-control" id="list-filter" placeholder="Search by specie, observer or comment">
-					</div>
-				</div>
-				<div class="row" style="padding: 10px 0px;">
-					<div class="col-lg-12">
-						<div class="btn-group btn-group-sort">
-							<button type="button" href="#" class="btn btn-default sort" data-sort="specie_id">Taxonomy</button>
-							<button type="button" href="#" class="btn btn-default sort active" data-sort="id">Date</button>
-							<button type="button" href="#" class="btn btn-default" id="sort-distance">Distance</button>
-						</div>
-						<div class="btn-group btn-group-rarity" style="float: right;">
-							<button type="button" href="#" class="btn btn-default active" value="escape" data-toggle="tooltip" title="escape">E</button>
-							<button type="button" href="#" class="btn btn-default active" value="common" data-toggle="tooltip" title="Common">+</button>							
-							<button type="button" href="#" class="btn btn-default active" value="rare" data-toggle="tooltip" title="Rare">++</button>
-							<button type="button" href="#" class="btn btn-default active" value="very rare" data-toggle="tooltip" title="Very rare">+++</button>
-							<button type="button" href="#" class="btn btn-default active" value="never seen" data-toggle="tooltip" title="never seen">*</button>
-						</div>
-					</div>
-				</div>
-				<div class="row panel-group list" id="panel-group-list"></div>
-			</div>
-		</div>
-		<div class="sidebar-pane" id="searchs">
-			<div class="sidebar-header">
-				<h1>Search</h1>
-				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-			</div>
-			<div class="sidebar-body">
-				<form id="yourForm">
-					<div class="row">
-						<div class="col-xs-12" id="search-panels-col">
-							<div class="panel-group">
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title">Place</h4> 
-									</div>
-									<div id="place" class="panel-collapse">
-										<div class="panel-body" id="P_adv">
-											<div class="row">
-												<div class="col-md-9" style="padding-right:3px;"><select id="countrySelect" class="form-control" type="text" placeholder="Choose a websites"></select></div>
-												<div class="col-md-3 text-center" style="padding-left:3px;"><button type="button" class="btn btn-default btn-md" id="search-on-map">Select</button></div>
-											</div>
-											<div class="row">
-												<div class="col-md-12"><ul id="place" class="nav nav-pills nav-justified">
-													<li name="all" title="All places from the selected region" class="active" data-toggle="tab"><a>All</a></li>
-													<!--<li name="canton" title="" data-toggle="tab"><a>Region</a></li>-->
-													<li name="coord" title="Use custum coordinate" data-toggle="tab"><a>Coordinate <button type="button" id="draw-rectangle" class="btn btn-xs btn-default">Draw</button></a></li>
-												</ul></div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title">Date</h4>
-									</div>
-									<div id="date" class="panel-collapse">
-										<div class="panel-body" id="D_adv">
-											<div class="row">
-												<div class="col-lg-8 radio">
-													<label><input type="radio" name="radio_date" value="range">
-														<div class="input-group input-daterange">
-															<input class="form-control" type="text" value="" id="input-date-from">
-															<span class="input-group-addon">to</span>
-															<input class="form-control" type="text" value="" id="input-date-to">
-														</div>
-													</label>
-												</div> 
-												<div class="col-lg-4 radio">
-													<label><input type="radio" name="radio_date" value="offset"> <input class="form-control" id="date_ago" type="number" value="5" min="0" style="margin-right: 3px;">days</label>
-												</div>
-												<div class="col-lg-12 radio date-cust">
-													<a href="#" id="date-range-10years">[last 10 years]</a> <a href="#" id="date-range-1year">[last year]</a> <a href="#" id="date-range-thisyear">[this year]</a> <a href="#" id="date-range-thismonth">[this month]</a> <a href="#" id="date-range-thisweek">[this week]</a>
-												</div>
-												<div class="col-lg-8 radio">
-													<label><input type="radio" name="radio_date" value="season">
-														<div class="input-group input-daterange">
-															<input class="form-control" type="text" value="" id="input-season-from"> 
-															<span class="input-group-addon">to</span>
-															<input class="form-control" type="text" value="" id="input-season-to">
-														</div>
-													</label>
-												</div>
-												<div class="col-lg-4 radio">
-													<label><input type="radio" name="radio_date" value="all">All time</label>
-												</div>
-												<div class="col-lg-12 radio date-cust">
-													<a href="#" id="date-season-spring">[Spring]</a> <a href="#" id="date-season-summer">[Summer]</a> <a href="#" id="date-season-autumn">[Autumn]</a> <a href="#" id="date-season-winter">[Winter]</a> <a href="#" id="date-season-plusmoins3">[+/-3d]</a> <a href="#" id="date-season-plusmoins7">[+/-7d]</a> <a href="#" id="date-season-plusmoins14">[+/-14d]</a>
-												</div> 
-											</div>  
-										</div>
-									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title">Species</h4>
-									</div>
-									<div id="species" class="panel-collapse">
-										<div class="panel-body">
-											<div class="form-group row" style="margin-bottom: 0px;">
-												<div class="col-lg-12 radio">
-													<label>
-														<input type="radio" name="radio_specie" value="category" checked="checked">
-														<div id="cat" class="list-group list-group-horizontal btn-group-justified btn-xs" style="display: inline-flex; padding-left: 4px;">
-															<a class="list-group-item active" name="never" title="Never recorded">+++</a>
-															<a class="list-group-item active" name="veryrare" title="Very Rare">++</a>
-															<a class="list-group-item active" name="rare" title="Rare">+</a>
-															<a class="list-group-item active" name="unusual" title="Unusual">–</a>
-															<a class="list-group-item" name="common" title="Common">– –</a>
-															<a class="list-group-item" name="verycommon" title="Very Common">– – –</a>
-															<a class="list-group-item" name="escaped" title="Escaped">E</a>
-														</div>
-													</label>
-													<div id="search_species_lang" class="btn-xs list-group list-group-horizontal text-right btn-xs">
-														<a class="list-group-item active" name="en" title="English">EN</a>
-														<a class="list-group-item active" name="fr" title="French">FR</a>
-													</div>
-												</div>
-												<div class="col-md-10 radio">
-													<label><input type="radio" name="radio_specie" value="species"></label><select id="search_species" class="form-control" type="text" placeholder="Search a specie..."></select>
-												</div>
-												<div class="col-md-2 radio" style="padding-right:20px;">
-													<button type="button" class="btn btn-md btn-default" id="button-sp-info" title="See bird statistic and information">Info</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title">Other</h4>
-									</div>
-									<div class="panel-collapse">
-										<div class="panel-body">
-											<div class="row" id="other">
-												<div class="col-md-3" id="only_mine-col" style="display:none;">
-													<div class="checkbox"><label><input id="only_mine" type="checkbox">Mine</label></div>
-												</div>
-												<div class="col-md-4">
-													<div class="checkbox"><label title="Only select new data since last session"><input id="only_new" type="checkbox">New</label></div>
-												</div>
-												<div class="col-md-4">
-													<div class="checkbox"><label title="Only select data with picture"><input id="only_picture" type="checkbox">Picture</label></div>
-												</div>
-												<div class="col-md-4">
-													<div class="checkbox"><label title="Only select data with sound"><input id="only_sound" type="checkbox">Sound</label></div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title">Outputs</h4>
-									</div>
-									<div id="formatting" class="panel-collapse">
-										<div class="panel-body">
-											<ul id="out" class="nav nav-pills nav-justified">
-												<li class="dropdown">
-													<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="website-dropdown-toggle" title="View the result on the corresponding biolovision website. Select the visualization of the website here.">Website<span class="caret"></span></a>
-													<ul class="dropdown-menu">
-														<li name="list"><a>Detail List</a></li>
-														<li name="species"><a>Species List</a></li>
-														<li name="synth"><a>Daily Summary</a></li>
-														<li name="histo"><a>Temporal Graph</a></li>
-														<li name="alt"><a>Altitude Graph</a></li>
-														<li name="map"><a>Static Map</a></li>
-													</ul>
-												</li>
-												<!--<li name="kml" id="kml-button" title="View the result on the current map" class="disbale"><a>View On Map</a></li>
-												<li name="csv" id="csv-button" title="Export the result of the specie list on a csv file"><a>Export to CSV</a></li>-->
-												
-											</ul>
-
-											<div class="row" id="target-param" style="display:none;">
-												<div class="col-md-12">
-													<label><input type="checkbox" name="target"> Filter by Target</label>
-												</div>
-												<div class="col-md-12">Date: 
-													<label class="radio-inline"><input type="radio" name="target-yearlife" value="same">Same</label>
-													<label class="radio-inline"><input type="radio" name="target-yearlife" value="year">Yearlist</label>
-													<label class="radio-inline"><input type="radio" name="target-yearlife" value="all" checked="checked">Lifelist</label>
-												</div>
-												<div class="col-md-12">Location: 
-													<label class="radio-inline"><input type="radio" name="target-coordall" value="coord" checked="checked">Coordinate</label>
-													<label class="radio-inline"><input type="radio" name="target-coordall" value="all">All</label>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row" id="buttons">
-						<div class="col-md-12 center-block">
-							<input title="Let's Go!" type="submit" value="Submit" id="send" class="btn btn-primary btn-lg center-block">
-						</div>
-					</div>
-					<label style="width: 100%;">Convert Specie List (HTML) to CSV
-						<input type="file" id="uploadSpecieList" class="form-control" accept=".html">
-						<span class="custom-file-control"></span>
-					</label>
-                           		<label style="width: 100%;">Convert eBird Target (HTML) to CSV
-						<input type="file" id="uploadeBirdTarget" class="form-control" accept=".html">
-						<span class="custom-file-control"></span>
-					</label>
-				</form>
-				<div class="overlay hidden"><i class="fa fa-spinner fa-spin"></i></div>
-			</div>
-		</div>
-		<div class="sidebar-pane" id="example">
-			<div class="sidebar-header">
-				<h1>Examples</h1>
-				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-			</div>
-			<div class="sidebar-body">
-				<a href="https://goo.gl/ZWf1wr">
-					<div class="exemple-box" style="background-image:url(https://zoziologie.raphaelnussbaumer.com/wp-content/uploads/2016/10/8527852527_cf82f5d521_z.jpg)">
-						<div class="exemple-box-inner">
-							<h2>Where to find Eurasian Woodcock in Summer?</h2>
-						</div>
-					</div>
-				</a>
-				<a href="https://goo.gl/47UFZW">
-					<div class="exemple-box" style="background-image:url(https://zoziologie.raphaelnussbaumer.com/wp-content/uploads/2016/10/6192317695_c02eb2302b_z.jpg)">
-						<div class="exemple-box-inner">
-							<h2>This year’s Yellow-Browed Warler</h2>
-						</div>
-					</div>
-				</a>
-				<a href="https://goo.gl/tyCfsK">
-					<div class="exemple-box" style="background-image:url(https://zoziologie.raphaelnussbaumer.com/wp-content/uploads/2016/10/27225987324_b59b8269fb_z.jpg)">
-						<div class="exemple-box-inner">
-							<h2>Where are the best spots for Dotterel in Switzerland ?</h2>
-						</div>
-					</div>
-				</a>
-				<!--<a href="https://goo.gl/ZQxJuH">
-					<div class="exemple-box" style="background-image:url(https://zoziologie.raphaelnussbaumer.com/wp-content/uploads/2016/10/9965363023_30b5eaab89_z.jpg)">
-						<div class="exemple-box-inner">
-							<h2>Water Pipit Habitat: Winter vs Summer</h2>
-						</div>
-					</div>
-				</a>-->
-			</div>
-		</div>
-		<div class="sidebar-pane" id="share">
-			<div class="sidebar-header">
-				<h1>Share</h1>
-				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-			</div>
-			<div class="sidebar-body">
-				<p>It is now possible to share your map query. </p> 
-				<div class="form-group">
-					<label for="last-query">Last Query: </label>
-					<input class="form-control" type="text" id="last-query">
-				</div>
-				<button type="button" class="btn btn-default" id="last-query-btn">Copy the link</button>
-				<button type="button" class="btn btn-default" id="last-query-btn-st">Shorten &amp; Copy</button>
-				<div class="form-group">
-					<label for="all-query">All Query: </label>
-					<input class="form-control" type="text" id="all-query">
-				</div>
-				<button type="button" class="btn btn-default" id="all-query-btn">Copy the link</button>
-				<button type="button" class="btn btn-default" id="all-query-btn-st">Shorten &amp; Copy</button>
-			</div>
-		</div>
-		<div class="sidebar-pane" id="record">
-			<div class="sidebar-header">
-				<h1>Search</h1>
-				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-			</div>
-			<div class="sidebar-body">
-				<div class="row">
-					<div class="Myslider"><div>Picture</div></div>
-				</div>
-				<div class="row record-header">
-					<div class="col-xs-10">
-						<div class="record-header-specie">
-							<h1><span id="record-number">Nb</span> <span id="record-specie">Specie Name</span></h1>
-						</div>
-						<div class="record-header-date">
-							<h2><span id="record-date">date</span></h2>
-						</div>
-						<div class="record-header-place">
-							<span id="record-place">place</span>
-						</div>
-					</div>
-					<div class="col-xs-2">
-						<a href="#" id="record-link-a" target="_blank"><div id="record-link"><div id="record-link-base"><i class="fa fa-link fa-2x" aria-hidden="true"></i></div></div></a>
-					</div>
-				</div>
-				<div class="row record-description">
-					<span id="record-comment-2">“<span id="record-comment">–</span>“</span> <span id="record-author-2">– <span id="record-author">–</span></span>
-				</div>
-			</div>
-		</div>
-		<div class="sidebar-pane" id="instruction">
-			<div class="sidebar-header">
-				<h1>Instruction</h1>
-				<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-			</div>
-			<div class="sidebar-body">
-				<h4>How to read the icon</h4>
-				<div class="row">
-					<div class="col-xs-6">
-						<img src="https://i0.wp.com/zoziologie.raphaelnussbaumer.com/wp-content/uploads/2017/10/Capture.png?w=1170&amp;ssl=1" data-recalc-dims="1">
-					</div>
-					<div class="col-xs-6">
-						<img src="https://i2.wp.com/zoziologie.raphaelnussbaumer.com/wp-content/uploads/2017/10/Capture-1.png?w=1170&amp;ssl=1" data-recalc-dims="1">
-					</div>
-				</div>
-				
-				<div class="row">
-					<div class="col-xs-2">
-						<div class="marker-cluster-perso" style="background-color:rgba(16,135,191,.6);margin: 0;"><div style="background-color:rgba(16,135,191,.6)"><span>4</span></div></div>
-					</div>
-					<div class="col-xs-10">
-						Number of differents species. If only one, an icon of the specie will be shown.
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-2">
-						<div class="icon-perso-count icon-perso-count-ind">1</div>
-					</div>
-					<div class="col-xs-10">
-						Min and max count of the observations
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-2">
-						<div class="icon-perso-count icon-perso-count-obs">5</div>
-					</div>
-					<div class="col-xs-10">
-						Number of differents observations
-					</div>
-				</div>
-				<h4>How to use the search menu? <i class="fa fa-search"></i></h4>
-				<ol>
-					<li>Place:</li>
-					<ul>
-						<li>The first row defines the database query. You can change it by searching by name (left) or select it on the map with the button “Select”</li>
-						<li>The second row allows you to either select the whole database “All” or draw on the map a rectangle in which the query will be made “Coordinate”. Click on the “draw” button to make a new rectangle.</li>
-					</ul>
-					<li>Date: self-explanatory… the second left option is for all years but limited in the season.</li>
-					<li>Species: Choose either a set of species defined by rarity: +++ (very rare) to — (very common) and E for exotic or a specific one (bottom search). The “Info” will bring you to the current selected database website at the page showing you the distribution of the selected species.(very useful IMO). You can search in French or English. Other language are available if you need them.</li>
-					<li>Other: Limit your search to these option.</li>
-					<li>Output: Choose the output of your :</li>
-					<ul>
-						<li>Various visualization of the selected databse. This is basically generating a link to the website.</li>
-						<li>“View On Map” to view results on a current zoomable map. Not all database allows an export in kml (You can search them in the Place menu and “Select” button)</li>
-						<li>“Export to CSV” to generate the table of the specie list</li>
-					</ul>
-				</ol>
-
-
-				
-			</div>
-		</div>
+	<div class="flex-grow-1 flex-fill">
+		<div id="map1" class="sidebar-map"></div>
 	</div>
 </div>
-<div id="map1" class="sidebar-map"></div>
