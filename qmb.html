@@ -61,7 +61,7 @@ plugins:
 					</label>
 				</div> 
 				<div class="col-lg-4 radio">
-					<label><input type="radio" name="radio_date" value="offset"> <input class="form-control" id="date_ago" type="number" value="5" min="0" style="margin-right: 3px;">days</label>
+					<label><input type="radio" name="radio_date" value="offset" checked="checked"> <input class="form-control" id="date_ago" type="number" value="5" min="0" style="margin-right: 3px;">days</label>
 				</div>
 				<div class="col-lg-12 radio date-cust">
 					<a href="#" id="date-range-10years">[last 10 years]</a> <a href="#" id="date-range-1year">[last year]</a> <a href="#" id="date-range-thisyear">[this year]</a> <a href="#" id="date-range-thismonth">[this month]</a> <a href="#" id="date-range-thisweek">[this week]</a>
@@ -130,21 +130,18 @@ plugins:
 					<div class="checkbox"><label title="Only select data with sound"><input id="only_sound" type="checkbox">Sound</label></div>
 				</div>
 				<div class="col-md-6">
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
-						Result Format
-						<div class="dropdown-menu" id="website-dropdown-toggle" aria-labelledby="dropdownMenuButton" title="View the result on the corresponding biolovision website. Select the visualization of the website here.">
-							<a class="dropdown-item" name="list" href="#">Detail List</a>
-							<a class="dropdown-item" name="species" href="#">Species List</a>
-							<a class="dropdown-item" name="synth" href="#">Daily Summary</a>
-							<a class="dropdown-item" name="histo" href="#">Temporal Graph</a>
-							<a class="dropdown-item" name="alt" href="#">Altitude Graph</a>
-							<a class="dropdown-item" name="map" href="#">Static Map</a>
-						</div>
-						<div class="dropdown">
-
-						</div>
+					<div class="form-group">
+						<select class="form-control" id="dropdownMenuButton">
+							<option name="list">Detail List</option>
+							<option name="species">Species List</option>
+							<option name="synth">Daily Summary</option>
+							<option name="histo">Temporal Graph</option>
+							<option name="alt">Altitude Graph</option>
+							<option name="map">Static Map</option>
+						</select>
 					</div>
 				</div>
+			</div>
 			<div class="row" id="buttons">
 				<div class="col-md-12 center-block">
 					<input title="Let's Go!" type="submit" id="send" class="btn btn-primary btn-lg center-block">

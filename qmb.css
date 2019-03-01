@@ -5,6 +5,12 @@ html, body, .initial-content, #map1, .d-flex {
 .leaflet-container{
 	font:inherit;
 }
+a:hover{
+	text-decoration: none;
+}
+a{
+	color: inherit;
+}
 
 
 @media (min-width: 1200px){
@@ -51,6 +57,10 @@ label{
 }
 .list-group-item{
 	padding: .5rem 1rem;
+	cursor: pointer;
+}
+.list-group-item.active{
+	color: white;
 }
 #search_species_lang{
 	margin-left: auto;
