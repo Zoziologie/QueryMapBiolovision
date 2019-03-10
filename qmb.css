@@ -1,6 +1,6 @@
 /*GENEAL STRUCTURE*/
 html, body, .initial-content, #map1, .d-flex {
-	height: 100%;
+	min-height: 100%;
 }
 .leaflet-container{
 	font:inherit;
@@ -84,4 +84,6 @@ label{
 #yourForm{
 	padding-bottom: 	60px;
 }
-
+#uploadSpecieList{
+	height: initial;
+}

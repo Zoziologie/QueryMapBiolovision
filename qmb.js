@@ -6,8 +6,8 @@ var countrieslist  = [{"osm_id":"51701","name":"Switzerland","kml":true,"website
 
 
 
-var changeCountry = function(osm_id){
-	var country = jQuery.grep(countrieslist, function(e){ return e.osm_id == osm_id; })[0];
+var changeCountry = function(osmid){
+	var country = jQuery.grep(countrieslist, function(e){ return e.osm_id == osmid; })[0];
 	
 	var layer = layerCountries.getLayer(country.layer_id);
 	layer.setStyle({
@@ -18,7 +18,7 @@ var changeCountry = function(osm_id){
 	layerCountry.clearLayers();
 	layerCountry.addLayer(layer)
 
-	osm_id = osm_id;
+	osm_id = osmid;
 }
 
 
@@ -37,6 +37,7 @@ var changeCountry = function(osm_id){
 // Create the link
 function getLink() {
 	// Initial link url
+	var osm_id = jQuery('#countrySelect')[0].selectize.getValue();
 	var country = jQuery.grep(countrieslist, function(e){ return e.osm_id == osm_id; })[0];
 	var link = country.website + '/index.php?m_id=94';
 
