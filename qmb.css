@@ -1,5 +1,8 @@
 /*GENEAL STRUCTURE*/
-html, body, .initial-content, #map1, .d-flex {
+html, body, .initial-content {
+	height: 100%;
+}
+#map1{
 	min-height: 100%;
 }
 .leaflet-container{

@@ -568,7 +568,7 @@ jQuery(document).ready(function() {
 
 	// SPECIES
 	jQuery('.list-group#cat a').click(function(e) {
-        jQuery(this).toggleClass('active');
+		jQuery(this).toggleClass('active');
 		jQuery("input[name='radio_specie'][value='category']").prop("checked", true);
 	})
 
@@ -584,7 +584,7 @@ jQuery(document).ready(function() {
 		jQuery("input[name='radio_specie'][value='species']").prop("checked", true);
 	});
 	jQuery('#search_species_lang a').click(function(e) {
-        jQuery(this).toggleClass('active');
+		jQuery(this).toggleClass('active');
 	})
 
 	// OUTPUT
@@ -597,152 +597,144 @@ jQuery(document).ready(function() {
 
 	// SUMBIT
 	/*jQuery("#yourForm").submit(function(event) {
-    // this takes care of disabling the form's submission
-    event.preventDefault();
+	// this takes care of disabling the form's submission
+	event.preventDefault();
 	window.open(getLink());
-    // the rest of your code...
+	// the rest of your code...
 });*/
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	jQuery("#uploadSpecieList").change(function(evt) {
-		
-		var reader = new FileReader();
-		reader.onload = (function(theFile) {
-			return function(e) {
-				body = e.target.result;
-				var n = body.search('rowlight')-12;
-				var m = body.search('<div style="clear:both"></div><script>');
-				var body = body.slice(n,m);
-				var body = body.split('<div style="clear:both"></div>');
-
-				var bird_list=[];
-				for (i = 0; i < body.length-2; i++) { 
-					var bird = [];
-					var txt = body[i];
-					txt = txt.slice(txt.search('href="')+6);
-					var url_1 = txt.slice(0,txt.search('"'));
-					txt = txt.slice(txt.search('href="')+6);
-					var url_2 = txt.slice(0,txt.search('"'));
-					txt = txt.slice(txt.search('href="')+6);
-					var url_3 = txt.slice(0,txt.search('"'));
-					txt = txt.slice(txt.search('ght;">')+6);
-					bird.push(parseInt( txt.slice(0,txt.search('</div>'))));
-                	//txt = txt.slice(txt.search('itle="')+6);
-                	//bird.push(txt.slice(0,txt.search('"')));
-                	txt = txt.slice(txt.search('color:#')+7);
-                	color = txt.slice(0,txt.search('">'));
-                	switch (color) {
-                		case '000000':
-                		bird.push('unusual to very common');
-                		break;
-                		case '993366':
-                		bird.push('escaped');
-                		break;
-                		case 'CC3300':
-                		bird.push('rare');
-                		break;
-                		case 'FF0000':
-                		bird.push('very rare');
-                		break;
-                		case 'CC0099':
-                		bird.push('never seen');
-                		break;
-                		default:
-                		bird.push('undefine')
-                	}
-                	txt = txt.slice(txt.search('><b>')+4);
-                	bird.push(txt.slice(0,txt.search('</b>')));
-                	txt = txt.slice(txt.search('<i>')+3);
-                	bird.push(txt.slice(0,txt.search('</i>')));
-                	txt = txt.slice(txt.search('height="10">')+13);
-                	bird.push(txt.slice(0,txt.search('</div>')).replace('&lt;','<'));
-                	txt = txt.slice(txt.search('><i>')+4);
-                	bird.push(txt.slice(0,txt.search('</i>')));
-                	txt = txt.slice(txt.search('><i>')+4);
-                	bird.push(txt.slice(0,txt.search('</i>')));
-                	bird.push(url_1.replace(/amp;/g,''));
-                	bird.push(url_2.replace(/amp;/g,''));
-                	bird.push(url_3.replace(/amp;/g,''));
-                	bird_list.push(bird);
-                }
-                console.log(bird_list)
-
-                var csvContent = "data:text/csv;charset=utf-8,";
-                bird_list.forEach(function(infoArray, index) {
-                	dataString = infoArray.join(",");
-                	csvContent += index < bird_list.length ? dataString + "\n" : dataString;
-                });
-                var encodedUri = encodeURI(csvContent);
-                var link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", "my_data.csv");
-
-                jQuery(".overlay").addClass("hidden");
-                link.click();
-            };
-        })(evt.target.files[0]);
-
-        reader.readAsText(evt.target.files[0]);
-    });
-
-
-
-	jQuery("#uploadeBirdTarget").change(function(evt) {
-		
-		var reader = new FileReader();
-		reader.onload = (function(theFile) {
-			return function(e) {
-				parser = new DOMParser();
-				body = parser.parseFromString( e.target.result,'text/html');
-				data=[];
-				Array.from(body.getElementsByClassName('ResultsStats')).forEach(function(res){
-					d=[];
-					d.push(res.getElementsByClassName('ResultsStats-index')[0].innerHTML);
-					d.push(res.getElementsByClassName('SpecimenHeader-joined')[0].innerHTML.split(' <em')[0]);
-					d.push(res.getElementsByClassName('StatsIcon-stat-count')[0].innerHTML);
-					d.push(res.getElementsByClassName('ResultsStats-action')[0].innerHTML.split('href="')[1].split('"')[0]);
-					data.push(d)
-				})
-
-				var csvContent = "data:text/csv;charset=utf-8,";
-				data.forEach(function(d) {
-					csvContent += d.join(",") + "\n";
-				});
-				var encodedUri = encodeURI(csvContent);
-				var link = document.createElement("a");
-				link.setAttribute("href", encodedUri);
-				link.setAttribute("download", "my_data.csv");
-
-				jQuery(".overlay").addClass("hidden");
-				link.click();
-			};
-		})(evt.target.files[0]);
-
-		reader.readAsText(evt.target.files[0]);
-	});
-
-
-
-
-	//alert('Work in Progress! Some function might be unavailable...')
+jQuery("#uploadSpecieList").change(uploadSpecieList);
+jQuery("#uploadeBirdTarget").change(uploadeBirdTarget)
+//alert('Work in Progress! Some function might be unavailable...')
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////
+uploadSpecieList = function() {
+	var reader = new FileReader();
+	reader.onload = function(theFile) {
+		return function(e) {
+			body = e.target.result;
+			var n = body.search('rowlight')-12;
+			var m = body.search('<div style="clear:both"></div><script>');
+			var body = body.slice(n,m);
+			var body = body.split('<div style="clear:both"></div>');
+
+			var bird_list=[];
+			for (i = 0; i < body.length-2; i++) { 
+				var bird = [];
+				var txt = body[i];
+				txt = txt.slice(txt.search('href="')+6);
+				var url_1 = txt.slice(0,txt.search('"'));
+				txt = txt.slice(txt.search('href="')+6);
+				var url_2 = txt.slice(0,txt.search('"'));
+				txt = txt.slice(txt.search('href="')+6);
+				var url_3 = txt.slice(0,txt.search('"'));
+				txt = txt.slice(txt.search('ght;">')+6);
+				bird.push(parseInt( txt.slice(0,txt.search('</div>'))));
+				//txt = txt.slice(txt.search('itle="')+6);
+				//bird.push(txt.slice(0,txt.search('"')));
+				txt = txt.slice(txt.search('color:#')+7);
+				color = txt.slice(0,txt.search('">'));
+				switch (color) {
+					case '000000':
+					bird.push('unusual to very common');
+					break;
+					case '993366':
+					bird.push('escaped');
+					break;
+					case 'CC3300':
+					bird.push('rare');
+					break;
+					case 'FF0000':
+					bird.push('very rare');
+					break;
+					case 'CC0099':
+					bird.push('never seen');
+					break;
+					default:
+					bird.push('undefine')
+				}
+				txt = txt.slice(txt.search('><b>')+4);
+				bird.push(txt.slice(0,txt.search('</b>')));
+				txt = txt.slice(txt.search('<i>')+3);
+				bird.push(txt.slice(0,txt.search('</i>')));
+				txt = txt.slice(txt.search('height="10">')+13);
+				bird.push(txt.slice(0,txt.search('</div>')).replace('&lt;','<'));
+				txt = txt.slice(txt.search('><i>')+4);
+				bird.push(txt.slice(0,txt.search('</i>')));
+				txt = txt.slice(txt.search('><i>')+4);
+				bird.push(txt.slice(0,txt.search('</i>')));
+				bird.push(url_1.replace(/amp;/g,''));
+				bird.push(url_2.replace(/amp;/g,''));
+				bird.push(url_3.replace(/amp;/g,''));
+				bird_list.push(bird);
+			}
+			console.log(bird_list)
+
+			var csvContent = "data:text/csv;charset=utf-8,";
+			bird_list.forEach(function(infoArray, index) {
+				dataString = infoArray.join(",");
+				csvContent += index < bird_list.length ? dataString + "\n" : dataString;
+			});
+			var encodedUri = encodeURI(csvContent);
+			var link = document.createElement("a");
+			link.setAttribute("href", encodedUri);
+			link.setAttribute("download", "my_data.csv");
+
+			jQuery(".overlay").addClass("hidden");
+			link.click();
+		};
+	}(evt.target.files[0]);
+
+	reader.readAsText(evt.target.files[0]);
+}
+
+uploadeBirdTarget = function(evt) {
+	var reader = new FileReader();
+	reader.onload = (function(theFile) {
+		return function(e) {
+			parser = new DOMParser();
+			body = parser.parseFromString( e.target.result,'text/html');
+			data=[];
+			Array.from(body.getElementsByClassName('ResultsStats')).forEach(function(res){
+				d=[];
+				d.push(res.getElementsByClassName('ResultsStats-index')[0].innerHTML.split('.')[0]); // rank
+				d.push(res.getElementsByClassName('SpecimenHeader-joined')[0].getElementsByTagName('a')[0].innerHTML.split('<em')[0].replace(/\r?\n|\r/g,'').replace(/\t/g,'')); //name
+				d.push(res.getElementsByClassName('SpecimenHeader-joined')[0].getElementsByTagName('a')[0].getElementsByTagName('em')[0].innerText); //latin
+				d.push(res.getElementsByClassName('StatsIcon-stat-count')[0].innerHTML);
+				d.push(res.getElementsByClassName('ResultsStats-action')[0].innerHTML.split('href="')[1].split('"')[0]);
+				data.push(d)
+			})
+
+			var csvContent = "data:text/csv;charset=utf-8,";
+			data.forEach(function(d) {
+				csvContent += d.join(",") + "\n";
+			});
+			var encodedUri = encodeURI(csvContent);
+			var link = document.createElement("a");
+			link.setAttribute("href", encodedUri);
+			link.setAttribute("download", "my_data.csv");
+
+			jQuery(".overlay").addClass("hidden");
+			link.click();
+		};
+	})(evt.target.files[0]);
+
+	reader.readAsText(evt.target.files[0]);
+};
