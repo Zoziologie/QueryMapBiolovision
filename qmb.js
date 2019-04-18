@@ -287,6 +287,7 @@ jQuery(document).ready(function() {
 
 	// Initiate the map
 	map.setView(L.latLng(46.57591, 7.84956), 8);
+	L.control.locate({'keepCurrentZoomLevel': true}).addTo(map).start();
 
 	// Add tileLayer:
 	baseLayers = {

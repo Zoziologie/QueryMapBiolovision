@@ -2,7 +2,7 @@
 html, body, .initial-content {
 	height: 100%;
 }
-#map1{
+#map1, .d-flex{
 	min-height: 100%;
 }
 .leaflet-container{
