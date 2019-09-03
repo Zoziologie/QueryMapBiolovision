@@ -626,77 +626,34 @@ jQuery("#uploadeBirdTarget").change(uploadeBirdTarget)
 
 
 ////////////////////////////////////
-uploadSpecieList = function() {
+uploadSpecieList = function(evt) {
 	var reader = new FileReader();
 	reader.onload = function(theFile) {
 		return function(e) {
-			body = e.target.result;
-			var n = body.search('rowlight')-12;
-			var m = body.search('<div style="clear:both"></div><script>');
-			var body = body.slice(n,m);
-			var body = body.split('<div style="clear:both"></div>');
 
-			var bird_list=[];
-			for (i = 0; i < body.length-2; i++) { 
-				var bird = [];
-				var txt = body[i];
-				txt = txt.slice(txt.search('href="')+6);
-				var url_1 = txt.slice(0,txt.search('"'));
-				txt = txt.slice(txt.search('href="')+6);
-				var url_2 = txt.slice(0,txt.search('"'));
-				txt = txt.slice(txt.search('href="')+6);
-				var url_3 = txt.slice(0,txt.search('"'));
-				txt = txt.slice(txt.search('ght;">')+6);
-				bird.push(parseInt( txt.slice(0,txt.search('</div>'))));
-				//txt = txt.slice(txt.search('itle="')+6);
-				//bird.push(txt.slice(0,txt.search('"')));
-				txt = txt.slice(txt.search('color:#')+7);
-				color = txt.slice(0,txt.search('">'));
-				switch (color) {
-					case '000000':
-					bird.push('unusual to very common');
-					break;
-					case '993366':
-					bird.push('escaped');
-					break;
-					case 'CC3300':
-					bird.push('rare');
-					break;
-					case 'FF0000':
-					bird.push('very rare');
-					break;
-					case 'CC0099':
-					bird.push('never seen');
-					break;
-					default:
-					bird.push('undefine')
-				}
-				txt = txt.slice(txt.search('><b>')+4);
-				bird.push(txt.slice(0,txt.search('</b>')));
-				txt = txt.slice(txt.search('<i>')+3);
-				bird.push(txt.slice(0,txt.search('</i>')));
-				txt = txt.slice(txt.search('height="10">')+13);
-				bird.push(txt.slice(0,txt.search('</div>')).replace('&lt;','<'));
-				txt = txt.slice(txt.search('><i>')+4);
-				bird.push(txt.slice(0,txt.search('</i>')));
-				txt = txt.slice(txt.search('><i>')+4);
-				bird.push(txt.slice(0,txt.search('</i>')));
-				bird.push(url_1.replace(/amp;/g,''));
-				bird.push(url_2.replace(/amp;/g,''));
-				bird.push(url_3.replace(/amp;/g,''));
-				bird_list.push(bird);
-			}
-			console.log(bird_list)
+			parser = new DOMParser();
+			body = parser.parseFromString( e.target.result,'text/html');
+			data=[];
+			Array.from(body.getElementsByClassName('rowlight','rowdark')).forEach(function(res){
+				d=[];
+				d.push(parseInt(res.getElementsByClassName('text-right col-sm-1')[0].innerHTML)) //number
+				d.push(res.querySelectorAll('b')[0].innerText) // English
+				d.push(res.querySelectorAll('i')[0].innerText) //latin
+				d.push(res.querySelectorAll('a')[0].href)
+				d.push(res.querySelectorAll('a')[1].href)
+				d.push(res.querySelectorAll('a')[2].href)
+				data.push(d)
+			})
 
 			var csvContent = "data:text/csv;charset=utf-8,";
-			bird_list.forEach(function(infoArray, index) {
-				dataString = infoArray.join(",");
-				csvContent += index < bird_list.length ? dataString + "\n" : dataString;
+			data.forEach(function(d) {
+				csvContent += d.join(",") + "\n";
 			});
 			var encodedUri = encodeURI(csvContent);
 			var link = document.createElement("a");
 			link.setAttribute("href", encodedUri);
 			link.setAttribute("download", "my_data.csv");
+
 
 			jQuery(".overlay").addClass("hidden");
 			link.click();
