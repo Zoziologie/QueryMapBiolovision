@@ -299,6 +299,10 @@ jQuery(document).ready(function() {
 		'Swisstopo': swisstopo
 	};
 
+	L.easyButton('fa-bars', function(btn, map){
+		jQuery('#sidebar').collapse('toggle')
+	}).addTo(map);
+
 
 	control = L.control.layers(baseLayers, null, {collapsed: true}).addTo(map);
 
@@ -346,10 +350,6 @@ jQuery(document).ready(function() {
 		//UpdateStuff();
 	});
 
-
-	L.easyButton('fa-search', function(btn, map){
-		jQuery('#sidebar').collapse('toggle')
-	}).addTo(map);
 
 	jQuery.getJSON("https://zoziologie.raphaelnussbaumer.com/assets/QueryMapBiolovision/ListOfBird.min.json", function(ListOfBird) {
 		jQuery('#search_species').selectize({
@@ -634,7 +634,7 @@ uploadSpecieList = function(evt) {
 			parser = new DOMParser();
 			body = parser.parseFromString( e.target.result,'text/html');
 			data=[];
-			Array.from(body.getElementsByClassName('rowlight','rowdark')).forEach(function(res){
+			Array.from(body.querySelectorAll('.rowlight, .rowdark')).forEach(function(res){
 				d=[];
 				d.push(parseInt(res.getElementsByClassName('text-right col-sm-1')[0].innerHTML)) //number
 				d.push(res.querySelectorAll('b')[0].innerText) // English
