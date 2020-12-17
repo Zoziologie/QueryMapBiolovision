@@ -280,10 +280,7 @@ jQuery(document).ready(function() {
 		maxZoom: 17,
 		attribution: 'Map data &copy; 2015 swisstopo',
 	});
-	var mapbox = L.tileLayer.provider('MapBox', {
-		id: 'rafnuss.npl3amec',
-		accessToken: token.mapbox
-	})
+	var mapbox = L.tileLayer.provider('MapBox', {id: 'mapbox/streets-v11', accessToken:token.mapbox})
 
 	// Initiate the map
 	map.setView(L.latLng(46.57591, 7.84956), 8);
@@ -608,6 +605,7 @@ jQuery(document).ready(function() {
 
 jQuery("#uploadSpecieList").change(uploadSpecieList);
 jQuery("#uploadeBirdTarget").change(uploadeBirdTarget)
+jQuery("#uploadDetailList").change(uploadDetailList)
 //alert('Work in Progress! Some function might be unavailable...')
 });
 
@@ -662,6 +660,68 @@ uploadSpecieList = function(evt) {
 
 	reader.readAsText(evt.target.files[0]);
 }
+
+uploadDetailList = function(evt) {
+	var reader = new FileReader();
+	reader.onload = function(theFile) {
+		return function(e) {
+
+			parser = new DOMParser();
+			body = parser.parseFromString( e.target.result,'text/html')
+
+			var date, place_name, place_id, data=[]
+
+			function elm(e){
+				if (jQuery(e).hasClass('listTop')){
+					date = e.innerHTML
+				} else if (jQuery(e).hasClass('listSubmenu')) {
+					place_name = e.textContent;
+					place_id = e.innerHTML.split(';id=')[1].split('">')[0];
+				} else if (jQuery(e).hasClass('listObservation')) {
+					data.push([date, place_name, place_id, e.textContent])
+				} else {
+					console.log('error with:')
+					console.log(list)
+				}
+			}
+
+			
+			Array.from(body.getElementsByClassName('listContainer')).forEach(function(c){
+				var list = c.children;
+				Array.from(c.children).forEach(function(e){
+					if (jQuery(e).hasClass('obs_level_2_i_content')) {
+						Array.from(e.children).forEach(function(e2){
+							Array.from(e2.children).forEach(function(e3){
+								elm(e3)
+							})
+						})
+					} else {
+						elm(e)
+					}
+				})
+			})
+
+
+
+
+
+			var csvContent = "data:text/csv;charset=utf-8,";
+			data.forEach(function(d) {
+				csvContent += d.join(",") + "\n";
+			});
+			var encodedUri = encodeURI(csvContent);
+			var link = document.createElement("a");
+			link.setAttribute("href", encodedUri);
+			link.setAttribute("download", "my_data.csv");
+
+			jQuery(".overlay").addClass("hidden");
+			link.click();
+		};
+	}(evt.target.files[0]);
+
+	reader.readAsText(evt.target.files[0]);
+}
+
 
 uploadeBirdTarget = function(evt) {
 	var reader = new FileReader();
