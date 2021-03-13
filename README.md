@@ -1,3 +1,6 @@
+## :warning: Since Biolovision have allowed to [query data based on a custom geometry](https://cdnfiles2.biolovision.net/www.ornitho.ch/pdffiles/news/Abfragen_far_Polygone-7948.pdf) and that the system [faune-france.org](https://www.faune-france.org/) has aggregated all french portal, this utility is not really useful anymore. You can check [Zoziologie/Zoziologie-Chrome-Extension](https://github.com/Zoziologie/Zoziologie-Chrome-Extension) or [contact me](mailto:rafnuss@gmail.com) 
+
+
 # QueryMapBiolovision
 
 My favorite missing feature in the Biolovision websites (ornitho.ch, ornitho.de, faune-alsace.fr...) is to search data for a specific region given by coordinate.
